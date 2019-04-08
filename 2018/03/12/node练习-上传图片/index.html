@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="node,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="keywords：formidable模块  multipart/form-data格式（content-type类型）1234567891011121314 //index.js//根文件，服务器启动，准备解析相应urlvar server = require(&amp;quot;./server&amp;quot;);var router = require(&amp;apos;./router&amp;apos;);var">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node-上传图片练习">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/node练习-上传图片/index.html">
+<meta property="og:site_name" content="Hank&#39;s House">
+<meta property="og:description" content="keywords：formidable模块  multipart/form-data格式（content-type类型）1234567891011121314 //index.js//根文件，服务器启动，准备解析相应urlvar server = require(&amp;quot;./server&amp;quot;);var router = require(&amp;apos;./router&amp;apos;);var">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-12T12:57:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node-上传图片练习">
+<meta name="twitter:description" content="keywords：formidable模块  multipart/form-data格式（content-type类型）1234567891011121314 //index.js//根文件，服务器启动，准备解析相应urlvar server = require(&amp;quot;./server&amp;quot;);var router = require(&amp;apos;./router&amp;apos;);var">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/node练习-上传图片/">
+
+
+
+
+
+  <title>node-上传图片练习 | Hank's House</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hank's House</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/node练习-上传图片/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hank">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hank's House">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">node-上传图片练习</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-12T17:08:42+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>keywords：formidable模块  multipart/form-data格式（content-type类型）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">//index.js</span><br><span class="line">//根文件，服务器启动，准备解析相应url</span><br><span class="line">var server = require(&quot;./server&quot;);</span><br><span class="line">var router = require(&apos;./router&apos;);</span><br><span class="line">var requestHandlers = require(&apos;./requestHandlers&apos;)</span><br><span class="line"></span><br><span class="line">var handle = &#123;&#125;;</span><br><span class="line">handle[&quot;/&quot;] = requestHandlers.start;</span><br><span class="line">handle[&quot;/start&quot;] = requestHandlers.start;</span><br><span class="line">handle[&quot;/upload&quot;] = requestHandlers.upload;</span><br><span class="line">handle[&quot;/show&quot;] = requestHandlers.show;</span><br><span class="line"></span><br><span class="line">server.start(router.route, handle);</span><br></pre></td></tr></table></figure> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">//server.js</span><br><span class="line">//监听8888端口，路由跳转</span><br><span class="line">var http = require(&apos;http&apos;);</span><br><span class="line">var url = require(&apos;url&apos;);</span><br><span class="line"></span><br><span class="line">function start(route, handle) &#123;</span><br><span class="line">    function onRequest(req, res) &#123;</span><br><span class="line">        if (req.url === &quot;/favicon.ico&quot;) return; </span><br><span class="line">        //屏蔽浏览器favicon，这玩意就是标签页顶显示的那个小图标,否则刷新页面会出现两次路径</span><br><span class="line">        &lt;!--关于favicon图标，要么直接扔到根目录，要么head里设置如下</span><br><span class="line">       &lt;link rel=&quot;shortcut icon&quot; href=&quot;/favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt; //这里保证IE兼容性  </span><br><span class="line">        //&lt;link rel=&quot;icon&quot; href=&quot;/favicon.ico&quot; sizes=&quot;32x32&quot; /&gt;    </span><br><span class="line">        //网站图标缓存，尽量不要超过16kb吧。32*32一般也就4kb--&gt;</span><br><span class="line">        console.log(&apos;received&apos;);</span><br><span class="line">        var pathname = url.parse(req.url).pathname; //解析req.url</span><br><span class="line">        route(handle,pathname,req,res);</span><br><span class="line">    &#125;</span><br><span class="line">    http.createServer(onRequest).listen(8888);</span><br><span class="line">    console.log(&apos;start&apos;);</span><br><span class="line">&#125;</span><br><span class="line">exports.start = start;</span><br><span class="line">/*var postData = &quot;&quot;;   这部分是读取文件测试     </span><br><span class="line">req.setEncoding(&quot;utf8&quot;);</span><br><span class="line">        req.addListener(&quot;data&quot;, function(chunk) &#123;</span><br><span class="line">            postData += chunk;</span><br><span class="line">            console.log(chunk);</span><br><span class="line">        &#125;);</span><br><span class="line">        req.addListener(&quot;end&quot;, function() &#123;</span><br><span class="line">            route(pathname, handle, res, postData);</span><br><span class="line">        &#125;)*/ </span><br></pre></td></tr></table></figure> 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">//router.js</span><br><span class="line">//路径无效404处理，有效开始分配事件处理程序</span><br><span class="line">function route(handle,pathname,req,res) &#123;</span><br><span class="line">    if (typeof handle[pathname] === &apos;function&apos;) &#123;</span><br><span class="line">        handle[pathname](res.req);//注意req在前?总是提示“res.writeHead not a function”的坑，只能各个文件轮流更改参数顺序了</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        res.writeHead(404, &#123; &quot;Content-Type&quot;: &quot;text/html&quot; &#125;);</span><br><span class="line">        res.write(&quot;404&quot;);</span><br><span class="line">        res.end();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">exports.route = route;</span><br></pre></td></tr></table></figure> 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line">//requestHandlers.js</span><br><span class="line">//事件处理程序，针对不同路由</span><br><span class="line">var exec = require(&apos;child_process&apos;).exec; //注意没()</span><br><span class="line">var querystring = require(&apos;querystring&apos;),fs = require(&quot;fs&quot;),</span><br><span class="line">formidable = require(&apos;formidable&apos;);</span><br><span class="line"></span><br><span class="line">function start(res) &#123;</span><br><span class="line">    /*function sleep(sec) &#123;</span><br><span class="line">        let now = new Date().getTime();</span><br><span class="line">        while (new Date().getTime() &lt; now + sec);</span><br><span class="line">        /*let now = new Date(),exitTime = startTime.getTime()+sec;</span><br><span class="line">         while (true) &#123;</span><br><span class="line">             now = new Date();</span><br><span class="line">             if (now.getTime() &gt;  exitTime)</span><br><span class="line">                 return;</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    sleep(10000);*/</span><br><span class="line">    /*var content = &quot;empty&quot;;</span><br><span class="line">    exec(&quot;ca.txt&quot;, function(error, stdout, stderr) &#123;*/</span><br><span class="line">    var body = &apos;&lt;html&gt;&apos; +</span><br><span class="line">        &apos;&lt;head&gt;&apos; +</span><br><span class="line">        &apos;&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; &apos; +</span><br><span class="line">        &apos;charset=UTF-8&quot; /&gt;&apos; +</span><br><span class="line">        &apos;&lt;/head&gt;&apos; +</span><br><span class="line">        &apos;&lt;body&gt;&apos; +</span><br><span class="line">        &apos;&lt;form action=&quot;/upload&quot; enctype=&quot;multipart/form-data&quot; method=&quot;post&quot;&gt;&apos; +</span><br><span class="line">        &apos;&lt;input type=&quot;file&quot; name=&quot;upload&quot;&gt;&apos; +</span><br><span class="line">        &apos;&lt;input type=&quot;submit&quot; value=&quot;Upload file&quot;&quot;/&gt;&apos; +            //判断是否提交， onchange=&quot;alert(this.value)或者判断value是否为空？实际就是表单验证</span><br><span class="line">        &apos;&lt;/form&gt;&apos; +</span><br><span class="line">        &apos;&lt;/body&gt;&apos; +</span><br><span class="line">        &apos;&lt;/html&gt;&apos;;</span><br><span class="line">    res.writeHead(200, &#123; &quot;Content-Type&quot;: &quot;text/html;charset=utf-8&quot; &#125;);</span><br><span class="line">    res.write(body); //写入相应路径的返回值</span><br><span class="line">    res.end(); //直接打开相应文件了</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">function upload(res, req) &#123;</span><br><span class="line">    var form = new formidable.IncomingForm();</span><br><span class="line">    form.parse(req,function(err,fields,files)&#123;</span><br><span class="line">        fs.renameSync(files.upload.path,&quot;./tmp/2.jpg&quot;);//重命名为右侧</span><br><span class="line">        res.writeHead(200, &#123; &quot;Content-Type&quot;: &quot;text/html;charset=utf-8&quot; &#125;);</span><br><span class="line">        res.write(&quot;&lt;img src=&apos;/show&apos;&gt;&quot;);</span><br><span class="line">        res.end();</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function show(res)&#123;</span><br><span class="line">fs.readFile(&quot;./tmp/2.jpg&quot;,&quot;binary&quot;,function(err,file)&#123;</span><br><span class="line">    if(err)&#123;</span><br><span class="line">        res.writeHead(500, &#123; &quot;Content-Type&quot;: &quot;text/plain;charset=utf-8&quot; &#125;);</span><br><span class="line">        res.write(err+&quot;\n&quot;);</span><br><span class="line">        res.end();</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        res.writeHead(200, &#123; &quot;Content-Type&quot;: &quot;image/jpg&quot; &#125;);</span><br><span class="line">        res.write(file,&quot;binary&quot;);</span><br><span class="line">        res.end();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br><span class="line">exports.start = start;</span><br><span class="line">exports.upload = upload;</span><br><span class="line">exports.show = show;</span><br></pre></td></tr></table></figure> 
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/11/各种名字随手记/" rel="next" title="各种名词随手记">
+                <i class="fa fa-chevron-left"></i> 各种名词随手记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/15/vue-留言板+localStorage/" rel="prev" title="vue-留言板+localStorage+node后台留言板">
+                vue-留言板+localStorage+node后台留言板 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Hank</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hank</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
