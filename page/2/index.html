@@ -259,6 +259,134 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/node—网络操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hank">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hank's House">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/20/node—网络操作/" itemprop="url">node基础学习——网络操作</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-20T14:52:11+08:00">
+                2018-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>编写高性能web服务器</p>
+<h4 id="http部分"><a href="#http部分" class="headerlink" title="http部分"></a>http部分</h4><p>req和res的梳理<br>均可直接访问头数据如req.method res.headers等；均可req.on(‘data’/‘end’,function(){})<br>一个实际的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//客户端 发送请求</span><br><span class="line">http.get(&apos;http://127.0.0.1:8080&apos;,function(res)&#123;</span><br><span class="line">    //http.request(&#123;hostname:&apos;&apos;,port:8080&#125;,function) post请求时可如此。Q：此例如此写无法执行，因为本地主机的原因？</span><br><span class="line">    var body = [];</span><br><span class="line">    res.on(&apos;data&apos;,(chunk)=&gt;&#123;</span><br><span class="line">       body.push(chunk);</span><br><span class="line">    &#125;);  //服务器返回的数据</span><br><span class="line">    res.on(&apos;end&apos;,()=&gt;&#123;</span><br><span class="line">        console.log(body.toString());//body本身输出是二进制buffer数组</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">//服务器端 </span><br><span class="line">http.createServer((req,res)=&gt;&#123;</span><br><span class="line">    res.writeHead(200,&#123;&apos;Content-Type&apos;:&apos;text/plain&apos;&#125;);</span><br><span class="line">    res.write(&apos;hello&apos;);</span><br><span class="line">    res.end();</span><br><span class="line">&#125;).listen(8080)</span><br></pre></td></tr></table></figure></p>
+<h4 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h4><p>和http类似，只是多了额外的SSL证书配置。<br>//服务器端<br>var options = {<br>    key:fs.readFileSync(‘./ssl/default.key’), //服务器使用的私钥<br>    cert:fs.readFileSync(‘./ssl/default.cer’) //服务器使用的公钥<br>} //相比于http多了该参数<br>var server = https.creatServer(options,(req,res)=&gt;{</p>
+<p>})<br>//SNI技术，即此服务器为多个域名提供服务<br>//添加不同域名证书<br>server.addContext(‘foo.com’,{<br>    key:…,<br>    cert:…<br>})<br>//客户端模式发起请求<br>https.request(options,(res)=&gt;{ //别和服务器的options混了，这里是请求头、主机端口等信息</p>
+<p>})</p>
+<h4 id="url"><a href="#url" class="headerlink" title="url"></a>url</h4><p><img src="/images/url.png" alt="&quot;&quot;"><br>url字符串：比如<a href="http://user:pass@host.com:8080/p/a/t/h?query=string#hash" target="_blank" rel="noopener">http://user:pass@host.com:8080/p/a/t/h?query=string#hash</a><br>url对象：每一部分拆解开<br>转换方式：url.parse(‘url字符串’) 转换成对象<br><em>parse的另外两个参数：参数二为true，query字段返回的不是字符串而是queryString处理后的参数对象；参数三为true，可正确解析不含协议头的url如’//<a href="http://www.baidu.com&#39;" target="_blank" rel="noopener">www.baidu.com&#39;</a></em><br>url.format(‘url对象’)  转换成url字符串<br>url.resolve(‘<a href="http://www.baidu.com&#39;,&#39;/hank&#39;" target="_blank" rel="noopener">www.baidu.com&#39;,&#39;/hank&#39;</a>) 拼接url（引申：path.join是拼接文件路径哦）</p>
+<h4 id="queryString"><a href="#queryString" class="headerlink" title="queryString"></a>queryString</h4><p>url参数字符串和对象互相转换。解析url查询参数。<br>querystring.parse(‘foo=bar&amp;b=w’) 得{foo:bar,b:w}<br>querystring.stringify({})</p>
+<h4 id="zlib模块"><a href="#zlib模块" class="headerlink" title="zlib模块"></a>zlib模块</h4><p>开启gzip压缩功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">//服务器端。压缩HTTP响应体数据发给客户端。判断客户端是否开启，再决定是否启用</span><br><span class="line">http.createServer((req,res)=&gt;&#123;</span><br><span class="line">    //测试数据</span><br><span class="line">    var i = 1024,data=&apos;&apos;;</span><br><span class="line">    while(i--) &#123;</span><br><span class="line">        data += &apos;.&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    if((req.headers[&apos;accept-encoding&apos;]).indexOf(&apos;gzip&apos;)!==-1)&#123; //此处可以用正则表达式来写！</span><br><span class="line">        zlib.gzip(data,(err,data)&#123;</span><br><span class="line">        res.writeHead(200,&#123;</span><br><span class="line">            &apos;Content-Type&apos;:&apos;text/plain&apos;,</span><br><span class="line">            &apos;Content-Encoding&apos;:&apos;gzip&apos;  //accept-encoding和content-encoding</span><br><span class="line">        &#125;);</span><br><span class="line">        res.end(data);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">    //不设置gzip即可</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).listen(8080)</span><br><span class="line">//客户端。收到响应体数据进行解压缩。判断服务器端是否使用gzip，是的话进行解压</span><br><span class="line">var options = &#123;</span><br><span class="line">    ...</span><br><span class="line">    headers:&#123;</span><br><span class="line">        &apos;Accept-Encoding&apos;:&apos;gzip,deflate&apos; //两种压缩方式，服务器会根据这决定返回哪种压缩文件</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">http.request(options,(res)=&gt;&#123;</span><br><span class="line">    var body = [];</span><br><span class="line">    res.on(&apos;data&apos;,(chunk)=&gt;&#123;</span><br><span class="line">        body.push(chunk)</span><br><span class="line">    &#125;);</span><br><span class="line">    res.on(&apos;end&apos;,()=&gt;&#123;</span><br><span class="line">        body = Buffer.concat(body);</span><br><span class="line">        if(res.headers[&apos;Content-Encoding&apos;]===&apos;gzip&apos;)&#123; //或者switch(res.headers[&apos;content-encoding&apos;])判断是gzip or deflate等</span><br><span class="line">            zlib.gunzip(body,(err,data)&#123;</span><br><span class="line">                console.log(data.toString())</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            console.log(body)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h4 id="net模块"><a href="#net模块" class="headerlink" title="net模块"></a>net模块</h4><p>创建socket服务器或客户端。<br><em>socket协议是传输控制层的，websocket是应用层</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/19/node—文件操作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1376,137 +1504,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/26/算法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hank">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hank's House">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/26/算法/" itemprop="url">算法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T10:08:42+08:00">
-                2018-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="获取页面HTML标签"><a href="#获取页面HTML标签" class="headerlink" title="获取页面HTML标签"></a>获取页面HTML标签</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//获得页面所有HTML标签。一是获取，二是去重</span><br><span class="line">var a = document.getElementsByTagName(&apos;*&apos;);</span><br><span class="line">var arr = [],ar=[];</span><br><span class="line">function m()&#123;</span><br><span class="line">for(var i=1;i&lt;a.length;i++)&#123;</span><br><span class="line">ar.push(a[i].tagName);</span><br><span class="line">&#125;</span><br><span class="line">for(var j=0;j&lt;ar.length;j++)&#123;</span><br><span class="line">if(arr.includes(ar[j])===false)&#123;</span><br><span class="line">arr.push(ar[j]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//Best方案ES6，利用set特性去重</span><br><span class="line">let tags = [...document.getElementsByTagName(&apos;*&apos;)].map((v) =&gt; &#123;</span><br><span class="line">	return v.tagName</span><br><span class="line">&#125;)</span><br><span class="line">tags = [...new Set(tags)]</span><br></pre></td></tr></table></figure>
-<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//快速排序</span><br><span class="line">function quicksort(x)&#123;</span><br><span class="line">	if(x.length&lt;= 1)&#123;//必须&lt;=</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">let middle = x.splice(Math.floor(x.length/2),1);</span><br><span class="line">let left = [],right = [];</span><br><span class="line"></span><br><span class="line">for(let i = 0;i&lt;x.length;i++)&#123;</span><br><span class="line">	if(x[i]&lt;middle)&#123;</span><br><span class="line">		left.push(x[i]);</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		right.push(x[i])</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">return quicksort(left).concat(middle,quicksort(right));</span><br><span class="line">&#125;</span><br><span class="line">var result = quicksort([2,1,4,7,3,8,5,0]);</span><br></pre></td></tr></table></figure>
-<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//冒泡排序</span><br><span class="line">function bubblesort(x)&#123;</span><br><span class="line">for(let i = 0,len = x.length;i&lt;len;i++)&#123;</span><br><span class="line">	for(let j = i+1;j&lt;len;j++)&#123;//区间继续优化</span><br><span class="line">		if(x[i]&gt;x[j])&#123;</span><br><span class="line">			let temp = x[i];</span><br><span class="line">			x[i] = x[j];</span><br><span class="line">			x[j] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">return x;</span><br><span class="line">&#125;</span><br><span class="line">var result = bubblesort([2,1,4,7,3,8,5,0]);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure>
-<p>参考：<a href="https://blog.csdn.net/szu_aker/article/details/52295488" target="_blank" rel="noopener">https://blog.csdn.net/szu_aker/article/details/52295488</a></p>
-<h4 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function chose(x) &#123;</span><br><span class="line">    var len = x.length,</span><br><span class="line">        minindex, middle;</span><br><span class="line">    for (let i = 0; i &lt; len; i++) &#123;</span><br><span class="line">        minindex = i;</span><br><span class="line">        for (let j = i + 1; j &lt; len; j++) &#123;</span><br><span class="line">            if (x[j] &lt; x[minindex]) &#123;</span><br><span class="line">                minindex = j; //不断循环找最小值的索引</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        middle = x[i];</span><br><span class="line">        x[i] = x[minindex];</span><br><span class="line">        x[minindex] = middle;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    console.log(x);</span><br><span class="line">&#125;</span><br><span class="line">chose([2,4,0,1,2,8,5])</span><br></pre></td></tr></table></figure>
-<h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function deepclone(obj)&#123;</span><br><span class="line">let newObj = obj.constructor=== Array?[]:&#123;&#125;;</span><br><span class="line">	for(let i in obj)&#123;</span><br><span class="line">	newObj[i] = typeof obj[i] === &apos;object&apos;?deepclone(obj[i]):obj[i];</span><br><span class="line">	&#125;</span><br><span class="line">return newObj;</span><br><span class="line">&#125;</span><br><span class="line">var result = deepclone(&#123;m:[1,2],n:&#123;k:5&#125;&#125;);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure>
-<h4 id="找重复字符"><a href="#找重复字符" class="headerlink" title="找重复字符"></a>找重复字符</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var str = &apos;aasjhdhdhjjjsssa&apos;;</span><br><span class="line">str = str.split(&apos;&apos;).sort().join(&apos;&apos;); //排序</span><br><span class="line">var value = &apos;&apos;,</span><br><span class="line">    index = 0;</span><br><span class="line">var re = /(\w)\1+/g;</span><br><span class="line">str.replace(re, function($0, $1) &#123;</span><br><span class="line">    //$0 是aaa dd ...这几项。$1是a d ..这几项</span><br><span class="line">    //执行时是一个个执行的，先是aaa，再是dd这样子</span><br><span class="line">    if (index &lt; $0.length) &#123;</span><br><span class="line">        index = $0.length; //不断覆盖长度短的，故最终的index就是最长的</span><br><span class="line">        value = $1; //最终的value就是最长的那个元素</span><br><span class="line">        //一个小bug，最长的有好几个怎么办，加入index===$0.length的判断</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">console.log(index + &apos;is&apos; + value)</span><br></pre></td></tr></table></figure>
-<h4 id="数组降维"><a href="#数组降维" class="headerlink" title="数组降维"></a>数组降维</h4><p>如[[1,2],[3,4]]到[1,2,3,4].(二维数组降维)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//嵌套循环</span><br><span class="line">function reduceDimension(arr)&#123;</span><br><span class="line">    var reduced = [];</span><br><span class="line">    for(var i=0;i&lt;arr.length;i++)&#123;</span><br><span class="line">        for(var j=0;j&lt;arr[i].length;j++)&#123;</span><br><span class="line">            reduced.push(arr[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return reduced;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//concat</span><br><span class="line">function reduceDimension(arr)&#123;</span><br><span class="line">    var reduced = [];</span><br><span class="line">    for(var i=0;i&lt;arr.length;i++)&#123;</span><br><span class="line">            reduced = reduced.concat(arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    return reduced;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//apply concat</span><br><span class="line">//apply参数1为被调用函数的this，参数2为被调用对象的arguments。即数组的各个元素依次成为被调用函数的各个参数。</span><br><span class="line">function reduceDimension(arr)&#123;</span><br><span class="line">return Array.prototype.concat.apply([],arr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>多维数组递归降维。（后续补充）</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1557,7 +1554,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

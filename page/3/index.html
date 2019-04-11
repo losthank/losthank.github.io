@@ -259,6 +259,137 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/26/算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hank">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hank's House">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/26/算法/" itemprop="url">算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T10:08:42+08:00">
+                2018-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="获取页面HTML标签"><a href="#获取页面HTML标签" class="headerlink" title="获取页面HTML标签"></a>获取页面HTML标签</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//获得页面所有HTML标签。一是获取，二是去重</span><br><span class="line">var a = document.getElementsByTagName(&apos;*&apos;);</span><br><span class="line">var arr = [],ar=[];</span><br><span class="line">function m()&#123;</span><br><span class="line">for(var i=1;i&lt;a.length;i++)&#123;</span><br><span class="line">ar.push(a[i].tagName);</span><br><span class="line">&#125;</span><br><span class="line">for(var j=0;j&lt;ar.length;j++)&#123;</span><br><span class="line">if(arr.includes(ar[j])===false)&#123;</span><br><span class="line">arr.push(ar[j]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//Best方案ES6，利用set特性去重</span><br><span class="line">let tags = [...document.getElementsByTagName(&apos;*&apos;)].map((v) =&gt; &#123;</span><br><span class="line">	return v.tagName</span><br><span class="line">&#125;)</span><br><span class="line">tags = [...new Set(tags)]</span><br></pre></td></tr></table></figure>
+<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//快速排序</span><br><span class="line">function quicksort(x)&#123;</span><br><span class="line">	if(x.length&lt;= 1)&#123;//必须&lt;=</span><br><span class="line">		return x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">let middle = x.splice(Math.floor(x.length/2),1);</span><br><span class="line">let left = [],right = [];</span><br><span class="line"></span><br><span class="line">for(let i = 0;i&lt;x.length;i++)&#123;</span><br><span class="line">	if(x[i]&lt;middle)&#123;</span><br><span class="line">		left.push(x[i]);</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		right.push(x[i])</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">return quicksort(left).concat(middle,quicksort(right));</span><br><span class="line">&#125;</span><br><span class="line">var result = quicksort([2,1,4,7,3,8,5,0]);</span><br></pre></td></tr></table></figure>
+<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//冒泡排序</span><br><span class="line">function bubblesort(x)&#123;</span><br><span class="line">for(let i = 0,len = x.length;i&lt;len;i++)&#123;</span><br><span class="line">	for(let j = i+1;j&lt;len;j++)&#123;//区间继续优化</span><br><span class="line">		if(x[i]&gt;x[j])&#123;</span><br><span class="line">			let temp = x[i];</span><br><span class="line">			x[i] = x[j];</span><br><span class="line">			x[j] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">return x;</span><br><span class="line">&#125;</span><br><span class="line">var result = bubblesort([2,1,4,7,3,8,5,0]);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure>
+<p>参考：<a href="https://blog.csdn.net/szu_aker/article/details/52295488" target="_blank" rel="noopener">https://blog.csdn.net/szu_aker/article/details/52295488</a></p>
+<h4 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function chose(x) &#123;</span><br><span class="line">    var len = x.length,</span><br><span class="line">        minindex, middle;</span><br><span class="line">    for (let i = 0; i &lt; len; i++) &#123;</span><br><span class="line">        minindex = i;</span><br><span class="line">        for (let j = i + 1; j &lt; len; j++) &#123;</span><br><span class="line">            if (x[j] &lt; x[minindex]) &#123;</span><br><span class="line">                minindex = j; //不断循环找最小值的索引</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        middle = x[i];</span><br><span class="line">        x[i] = x[minindex];</span><br><span class="line">        x[minindex] = middle;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    console.log(x);</span><br><span class="line">&#125;</span><br><span class="line">chose([2,4,0,1,2,8,5])</span><br></pre></td></tr></table></figure>
+<h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function deepclone(obj)&#123;</span><br><span class="line">let newObj = obj.constructor=== Array?[]:&#123;&#125;;</span><br><span class="line">	for(let i in obj)&#123;</span><br><span class="line">	newObj[i] = typeof obj[i] === &apos;object&apos;?deepclone(obj[i]):obj[i];</span><br><span class="line">	&#125;</span><br><span class="line">return newObj;</span><br><span class="line">&#125;</span><br><span class="line">var result = deepclone(&#123;m:[1,2],n:&#123;k:5&#125;&#125;);</span><br><span class="line">console.log(result);</span><br></pre></td></tr></table></figure>
+<h4 id="找重复字符"><a href="#找重复字符" class="headerlink" title="找重复字符"></a>找重复字符</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">var str = &apos;aasjhdhdhjjjsssa&apos;;</span><br><span class="line">str = str.split(&apos;&apos;).sort().join(&apos;&apos;); //排序</span><br><span class="line">var value = &apos;&apos;,</span><br><span class="line">    index = 0;</span><br><span class="line">var re = /(\w)\1+/g;</span><br><span class="line">str.replace(re, function($0, $1) &#123;</span><br><span class="line">    //$0 是aaa dd ...这几项。$1是a d ..这几项</span><br><span class="line">    //执行时是一个个执行的，先是aaa，再是dd这样子</span><br><span class="line">    if (index &lt; $0.length) &#123;</span><br><span class="line">        index = $0.length; //不断覆盖长度短的，故最终的index就是最长的</span><br><span class="line">        value = $1; //最终的value就是最长的那个元素</span><br><span class="line">        //一个小bug，最长的有好几个怎么办，加入index===$0.length的判断</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">console.log(index + &apos;is&apos; + value)</span><br></pre></td></tr></table></figure>
+<h4 id="数组降维"><a href="#数组降维" class="headerlink" title="数组降维"></a>数组降维</h4><p>如[[1,2],[3,4]]到[1,2,3,4].(二维数组降维)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//嵌套循环</span><br><span class="line">function reduceDimension(arr)&#123;</span><br><span class="line">    var reduced = [];</span><br><span class="line">    for(var i=0;i&lt;arr.length;i++)&#123;</span><br><span class="line">        for(var j=0;j&lt;arr[i].length;j++)&#123;</span><br><span class="line">            reduced.push(arr[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return reduced;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//concat</span><br><span class="line">function reduceDimension(arr)&#123;</span><br><span class="line">    var reduced = [];</span><br><span class="line">    for(var i=0;i&lt;arr.length;i++)&#123;</span><br><span class="line">            reduced = reduced.concat(arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    return reduced;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//apply concat</span><br><span class="line">//apply参数1为被调用函数的this，参数2为被调用对象的arguments。即数组的各个元素依次成为被调用函数的各个参数。</span><br><span class="line">function reduceDimension(arr)&#123;</span><br><span class="line">return Array.prototype.concat.apply([],arr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>多维数组递归降维。（后续补充）</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/23/hexo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1307,7 +1438,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

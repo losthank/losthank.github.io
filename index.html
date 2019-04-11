@@ -259,6 +259,142 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/11/各种循环/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hank">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hank's House">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/11/各种循环/" itemprop="url">map/forEach/for/reduce/for~of/for~in/filter</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-11T20:31:15+08:00">
+                2019-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>特点 效率</p>
+<h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let data = [&#123;id:1&#125;,&#123;id:2&#125;,&#123;id:3&#125;]</span><br><span class="line">let len = data.length</span><br><span class="line">for(let i=0;i&lt;len;i+=1) &#123;</span><br><span class="line">  data[i].id = i</span><br><span class="line">&#125;</span><br><span class="line">console.log(data)</span><br></pre></td></tr></table></figure>
+<p>最基础的，相比于其他支持break、continue</p>
+<h3 id="for-in"><a href="#for-in" class="headerlink" title="for~in"></a>for~in</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let data = [&#123;id:1&#125;,&#123;id:2&#125;,&#123;id:3&#125;]</span><br><span class="line">for(let i in data) &#123;</span><br><span class="line">  data[i].id = i</span><br><span class="line">&#125;</span><br><span class="line">console.log(data)</span><br></pre></td></tr></table></figure>
+<p>循环后id变成了字符串。(i是索引’0’ ‘1’ ‘2’)<br><em>多用于遍历对象</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let obj = &#123;a:1,b:2,c:3&#125;</span><br><span class="line">for(let i in obj) &#123;</span><br><span class="line">  obj[i] += 1</span><br><span class="line">&#125;</span><br><span class="line">console.log(obj)</span><br></pre></td></tr></table></figure></p>
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let hasSpaceInValue = false</span><br><span class="line">const reg = /[\r\n]/g</span><br><span class="line">if (response &amp;&amp; response.records) &#123;</span><br><span class="line">  response.records.forEach(item =&gt; &#123;</span><br><span class="line">    if (reg.test(item.value) || String(item.value).length &gt; 180) &#123;</span><br><span class="line">      hasSpaceInValue = true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不打算改变数据时使用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arr = [1, 2, 3, 4, 5];</span><br><span class="line">arr.forEach((num, index) =&gt; &#123;</span><br><span class="line">    return arr[index] = num * 2;</span><br><span class="line">&#125;);</span><br><span class="line">console.log(arr)</span><br></pre></td></tr></table></figure></p>
+<p>可以改变原始数组。</p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arr = [1, 2, 3, 4, 5];</span><br><span class="line">let doubled = arr.map(num =&gt; &#123;</span><br><span class="line">    return num * 2;</span><br><span class="line">&#125;);</span><br><span class="line">console.log(arr)</span><br></pre></td></tr></table></figure>
+<p>创建新数组（分配内存空间存储新数组）</p>
+<h3 id="es6-for-of"><a href="#es6-for-of" class="headerlink" title="es6 for~of"></a>es6 for~of</h3><p>代替for~in和forEach<br>遍历数组、字符串、映射（maps）、sets（集合）————iterable迭代器对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let data = [&#123;id:1&#125;,&#123;id:2&#125;,&#123;id:3&#125;]</span><br><span class="line">for(let i of data) &#123;</span><br><span class="line">  console.log(i)</span><br><span class="line">  if(i.id === 1) &#123;</span><br><span class="line">    break;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>遍历的是元素值;可以响应break、continue、return<br>(考虑兼容问题)</p>
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let target = data.list.filter(</span><br><span class="line">  item =&gt; item.name &amp;&amp; item.name.toLowerCase().indexOf(value.toLowerCase()) &gt; -1</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>不改变原数组</p>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var arr = [1,2,8,20];</span><br><span class="line">var sum = arr.reduce(function (prev, cur) &#123;</span><br><span class="line">    console.log(prev,cur)</span><br><span class="line">    return prev + cur;</span><br><span class="line">&#125;,0);</span><br><span class="line">console.log(sum)</span><br></pre></td></tr></table></figure>
+<p>可同时将前面数组项遍历产生的结果与当前遍历项进行运算</p>
+<h4 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h4><p>for~in map <br><br>for for~of  forEach </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/27/待掌握的知识点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1363,134 +1499,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/node—网络操作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Hank">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hank's House">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/20/node—网络操作/" itemprop="url">node基础学习——网络操作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-20T14:52:11+08:00">
-                2018-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>编写高性能web服务器</p>
-<h4 id="http部分"><a href="#http部分" class="headerlink" title="http部分"></a>http部分</h4><p>req和res的梳理<br>均可直接访问头数据如req.method res.headers等；均可req.on(‘data’/‘end’,function(){})<br>一个实际的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//客户端 发送请求</span><br><span class="line">http.get(&apos;http://127.0.0.1:8080&apos;,function(res)&#123;</span><br><span class="line">    //http.request(&#123;hostname:&apos;&apos;,port:8080&#125;,function) post请求时可如此。Q：此例如此写无法执行，因为本地主机的原因？</span><br><span class="line">    var body = [];</span><br><span class="line">    res.on(&apos;data&apos;,(chunk)=&gt;&#123;</span><br><span class="line">       body.push(chunk);</span><br><span class="line">    &#125;);  //服务器返回的数据</span><br><span class="line">    res.on(&apos;end&apos;,()=&gt;&#123;</span><br><span class="line">        console.log(body.toString());//body本身输出是二进制buffer数组</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br><span class="line">//服务器端 </span><br><span class="line">http.createServer((req,res)=&gt;&#123;</span><br><span class="line">    res.writeHead(200,&#123;&apos;Content-Type&apos;:&apos;text/plain&apos;&#125;);</span><br><span class="line">    res.write(&apos;hello&apos;);</span><br><span class="line">    res.end();</span><br><span class="line">&#125;).listen(8080)</span><br></pre></td></tr></table></figure></p>
-<h4 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h4><p>和http类似，只是多了额外的SSL证书配置。<br>//服务器端<br>var options = {<br>    key:fs.readFileSync(‘./ssl/default.key’), //服务器使用的私钥<br>    cert:fs.readFileSync(‘./ssl/default.cer’) //服务器使用的公钥<br>} //相比于http多了该参数<br>var server = https.creatServer(options,(req,res)=&gt;{</p>
-<p>})<br>//SNI技术，即此服务器为多个域名提供服务<br>//添加不同域名证书<br>server.addContext(‘foo.com’,{<br>    key:…,<br>    cert:…<br>})<br>//客户端模式发起请求<br>https.request(options,(res)=&gt;{ //别和服务器的options混了，这里是请求头、主机端口等信息</p>
-<p>})</p>
-<h4 id="url"><a href="#url" class="headerlink" title="url"></a>url</h4><p><img src="/images/url.png" alt="&quot;&quot;"><br>url字符串：比如<a href="http://user:pass@host.com:8080/p/a/t/h?query=string#hash" target="_blank" rel="noopener">http://user:pass@host.com:8080/p/a/t/h?query=string#hash</a><br>url对象：每一部分拆解开<br>转换方式：url.parse(‘url字符串’) 转换成对象<br><em>parse的另外两个参数：参数二为true，query字段返回的不是字符串而是queryString处理后的参数对象；参数三为true，可正确解析不含协议头的url如’//<a href="http://www.baidu.com&#39;" target="_blank" rel="noopener">www.baidu.com&#39;</a></em><br>url.format(‘url对象’)  转换成url字符串<br>url.resolve(‘<a href="http://www.baidu.com&#39;,&#39;/hank&#39;" target="_blank" rel="noopener">www.baidu.com&#39;,&#39;/hank&#39;</a>) 拼接url（引申：path.join是拼接文件路径哦）</p>
-<h4 id="queryString"><a href="#queryString" class="headerlink" title="queryString"></a>queryString</h4><p>url参数字符串和对象互相转换。解析url查询参数。<br>querystring.parse(‘foo=bar&amp;b=w’) 得{foo:bar,b:w}<br>querystring.stringify({})</p>
-<h4 id="zlib模块"><a href="#zlib模块" class="headerlink" title="zlib模块"></a>zlib模块</h4><p>开启gzip压缩功能<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">//服务器端。压缩HTTP响应体数据发给客户端。判断客户端是否开启，再决定是否启用</span><br><span class="line">http.createServer((req,res)=&gt;&#123;</span><br><span class="line">    //测试数据</span><br><span class="line">    var i = 1024,data=&apos;&apos;;</span><br><span class="line">    while(i--) &#123;</span><br><span class="line">        data += &apos;.&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">    if((req.headers[&apos;accept-encoding&apos;]).indexOf(&apos;gzip&apos;)!==-1)&#123; //此处可以用正则表达式来写！</span><br><span class="line">        zlib.gzip(data,(err,data)&#123;</span><br><span class="line">        res.writeHead(200,&#123;</span><br><span class="line">            &apos;Content-Type&apos;:&apos;text/plain&apos;,</span><br><span class="line">            &apos;Content-Encoding&apos;:&apos;gzip&apos;  //accept-encoding和content-encoding</span><br><span class="line">        &#125;);</span><br><span class="line">        res.end(data);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">    //不设置gzip即可</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).listen(8080)</span><br><span class="line">//客户端。收到响应体数据进行解压缩。判断服务器端是否使用gzip，是的话进行解压</span><br><span class="line">var options = &#123;</span><br><span class="line">    ...</span><br><span class="line">    headers:&#123;</span><br><span class="line">        &apos;Accept-Encoding&apos;:&apos;gzip,deflate&apos; //两种压缩方式，服务器会根据这决定返回哪种压缩文件</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">http.request(options,(res)=&gt;&#123;</span><br><span class="line">    var body = [];</span><br><span class="line">    res.on(&apos;data&apos;,(chunk)=&gt;&#123;</span><br><span class="line">        body.push(chunk)</span><br><span class="line">    &#125;);</span><br><span class="line">    res.on(&apos;end&apos;,()=&gt;&#123;</span><br><span class="line">        body = Buffer.concat(body);</span><br><span class="line">        if(res.headers[&apos;Content-Encoding&apos;]===&apos;gzip&apos;)&#123; //或者switch(res.headers[&apos;content-encoding&apos;])判断是gzip or deflate等</span><br><span class="line">            zlib.gunzip(body,(err,data)&#123;</span><br><span class="line">                console.log(data.toString())</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            console.log(body)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-<h4 id="net模块"><a href="#net模块" class="headerlink" title="net模块"></a>net模块</h4><p>创建socket服务器或客户端。<br><em>socket协议是传输控制层的，websocket是应用层</em></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1541,7 +1549,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
